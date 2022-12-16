@@ -18,16 +18,6 @@ function file_exists(file)
   return f ~= nil
 end
 
-
-function lines_from(file)
-  if not file_exists(file) then return {} end
-  lines = {}
-  for line in io.lines(file) do
-    lines[#lines + 1] = line
-  end
-  return lines
-end
-
 M.rails_db_schema = function(opts)
   local current_file = vim.fn.expand("%:p")
   local schema_file = vim.fn.getcwd() .. "/db/schema.rb"
