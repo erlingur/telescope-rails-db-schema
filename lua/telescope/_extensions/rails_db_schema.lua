@@ -48,7 +48,7 @@ M.rails_db_schema = function(opts)
     if table_name then
       local row = {}
       row["name"] = table_name
-      row["line"] = split(line, ":")[0]
+      row["line"] = tonumber(split(line, ":")[1])
       table.insert(tables, row)
     end
   end
