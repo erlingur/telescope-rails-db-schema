@@ -37,18 +37,19 @@ M.rails_db_schema = function(opts)
     return
   end
 
-  local lines = lines_from(schema_file)
+  local command = "egrep -n create_table " .. schema_file
+  local handle = io.popen(command)
+  local result = handle:read("*a")
+  handle:close()
 
   local tables = {}
-  for i, line in pairs(lines) do
-    if line:find("create_table") then
-      local table_name = line:match("create_table \"(.*)\"")
-      if table_name then
-        local test = {}
-        test["name"] = table_name
-        test["line"] = i
-        table.insert(tables, test)
-      end
+  for line in result:gmatch("[^\r\n]+") do
+    local table_name = line:match("create_table \"(.*)\"")
+    if table_name then
+      local row = {}
+      row["name"] = table_name
+      row["line"] = split(line, ":")[0]
+      table.insert(tables, row)
     end
   end
 
