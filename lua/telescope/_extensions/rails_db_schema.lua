@@ -27,7 +27,7 @@ M.rails_db_schema = function(opts)
     return
   end
 
-  local command = "egrep -n create_table " .. schema_file
+  local command = "grep -n create_table " .. schema_file
   local handle = io.popen(command)
   local result = handle:read("*a")
   handle:close()
